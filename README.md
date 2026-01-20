@@ -2,7 +2,8 @@
 
 Studyly is a high-performance sanctuary for students, designed to eliminate distractions and streamline module tracking.
 
-[Insert Screenshot of your App here]
+<img width="1873" height="882" alt="image" src="https://github.com/user-attachments/assets/475d5af1-8614-42cd-9396-ecac033c1937" />
+
 
 ## 🛠️ Tech Stack
 - **Frontend:** React.js, Tailwind CSS
