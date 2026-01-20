@@ -1,0 +1,18 @@
+import React, { useState } from 'react';
+import LandingPage from './pages/LandingPage';
+
+function App() {
+  const [page, setPage] = useState('landing');
+
+  if (page === 'landing') {
+    return <LandingPage onDemo={() => setPage('demo')} />;
+  }
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <h1>Demo Mode Coming Soon!</h1>
+    </div>
+  );
+}
+
+export default App;
