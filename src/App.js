@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LayoutGrid, Layers, Timer, Calendar, BarChart2, BookOpen, X, PlusCircle, ChevronLeft, LogOut } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 
 import LandingPage from './LandingPage';
 import Dashboard from './Dashboard';
@@ -66,6 +67,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F8F9FE] pb-32 font-sans selection:bg-blue-100">
+      <Analytics />
       
       {/* HEADER WITH EXIT TO LANDING PAGE */}
       <header className="p-8 flex justify-between items-center max-w-md mx-auto">
