@@ -27,7 +27,7 @@ export default function LandingPage({ scrollStep, onStart }) {
       </nav>
 
       {/* 2. HERO SECTION */}
-      <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20">
+      <div className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 relative z-10">
         <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 px-5 py-2 rounded-full mb-8 animate-in fade-in slide-in-from-top-4 duration-700">
           <Zap size={14} className="text-blue-400" />
           <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">The High-Performance Study Engine</span>
@@ -44,24 +44,23 @@ export default function LandingPage({ scrollStep, onStart }) {
         </button>
       </div>
 
-      {/* 3. STICKY FEATURE DEMO (The part you want to look like the image) */}
+      {/* 3. STICKY FEATURE DEMO - THE FIX IS HERE */}
       <div className="relative h-[600vh]">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-4">
           
-          {/* THE PHONE MOCKUP - Animates left/right based on scrollStep */}
+          {/* THE PHONE MOCKUP - Lower Z-Index (z-10) to stay BEHIND the cards */}
           <div 
-            className="relative z-20 w-[280px] h-[580px] bg-slate-900 rounded-[3.5rem] border-[10px] border-slate-900 shadow-[0_0_80px_rgba(59,130,246,0.15)] transition-all duration-700 ease-in-out flex-shrink-0"
+            className="relative z-10 w-[260px] h-[540px] md:w-[280px] md:h-[580px] bg-slate-900 rounded-[3.5rem] border-[10px] border-slate-900 shadow-[0_0_80px_rgba(59,130,246,0.15)] transition-all duration-700 ease-in-out flex-shrink-0"
             style={{ 
               transform: window.innerWidth < 768 
-                ? 'scale(0.85)' 
+                ? `scale(0.75) translateY(${scrollStep === 0 ? '0px' : '20px'})` 
                 : scrollStep === 0 
                   ? 'translateY(100px)' 
                   : features[scrollStep-1]?.side === 'left' 
-                    ? 'translateX(220px)' 
-                    : 'translateX(-220px)'
+                    ? 'translateX(240px)' 
+                    : 'translateX(-240px)'
             }}
           >
-            {/* Mockup Screen Content */}
             <div className="bg-[#F8F9FE] h-full w-full rounded-[2.5rem] overflow-hidden p-5 pt-12 text-slate-900">
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-1.5 text-[10px] font-black text-blue-600 italic tracking-tighter uppercase">
@@ -70,7 +69,7 @@ export default function LandingPage({ scrollStep, onStart }) {
                 <div className="w-8 h-8 bg-slate-200 rounded-xl" />
               </div>
               
-              <div className="animate-in fade-in duration-500 scale-90 origin-top">
+              <div className="animate-in fade-in duration-500 scale-90 origin-top opacity-40">
                 <Dashboard 
                     modules={[{id: 1, name: 'Math', progress: 72}]} 
                     exams={[{id: 1, name: 'Midterm', date: 'Jan 24'}]} 
@@ -79,26 +78,26 @@ export default function LandingPage({ scrollStep, onStart }) {
             </div>
           </div>
 
-          {/* FLY-IN FEATURE CARDS - Fixed to fly into the side gaps */}
+          {/* FEATURE CARDS - Higher Z-Index (z-20) to stay ON TOP of the phone */}
           {features.map((f) => (
             <div 
               key={f.id} 
-              className={`absolute transition-all duration-700 ease-out pointer-events-none 
-                w-[90%] md:w-[420px] left-1/2 -translate-x-1/2 
+              className={`absolute z-20 transition-all duration-700 ease-out 
+                w-[92%] md:w-[420px] left-1/2 -translate-x-1/2 
                 ${f.side === 'left' ? 'md:left-[8%] md:translate-x-0' : 'md:left-auto md:right-[8%] md:translate-x-0'}
-                ${scrollStep === f.id ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-20 scale-95'}
+                ${scrollStep === f.id ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' : 'opacity-0 translate-y-32 scale-90 pointer-events-none'}
               `}
             >
-              {/* Card Styling: Deep rounding and Floating Icon Badge */}
-              <div className="bg-white/10 border border-white/10 p-10 rounded-[3rem] backdrop-blur-3xl shadow-2xl relative">
+              {/* Floating Card Design */}
+              <div className="bg-white/10 border border-white/20 p-8 md:p-10 rounded-[3rem] backdrop-blur-3xl shadow-2xl relative">
                 <div className="w-14 h-14 bg-blue-600 text-white rounded-[1.2rem] flex items-center justify-center mb-8 shadow-lg shadow-blue-500/30">
                   <Zap size={28} fill="currentColor" />
                 </div>
                 
-                <h3 className="text-4xl font-black italic mb-4 uppercase tracking-tighter leading-none text-white">
+                <h3 className="text-3xl md:text-4xl font-black italic mb-4 uppercase tracking-tighter leading-none text-white">
                   {f.title}
                 </h3>
-                <p className="text-slate-400 text-base leading-relaxed font-medium">
+                <p className="text-slate-400 text-sm md:text-base leading-relaxed font-medium">
                   {f.desc}
                 </p>
               </div>
@@ -107,8 +106,8 @@ export default function LandingPage({ scrollStep, onStart }) {
         </div>
       </div>
 
-      {/* 4. FINAL CTA SECTION */}
-      <div className="min-h-screen flex flex-col items-center justify-center bg-white text-slate-900 rounded-t-[5rem] relative z-30 shadow-2xl px-6 border-t border-slate-50">
+      {/* 4. FINAL CTA */}
+      <div className="min-h-screen flex flex-col items-center justify-center bg-white text-slate-900 rounded-t-[5rem] relative z-[50] shadow-2xl px-6">
          <h2 className="text-5xl md:text-9xl font-black italic tracking-tighter uppercase mb-12 text-center leading-[0.9]">
            Optimize your<br/>Potential.
          </h2>
